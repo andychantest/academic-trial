@@ -1,0 +1,439 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         THE ACADEMIC TRIAL — 資產製作規格說明               ║
+║         Asset Production Guide                             ║
+║         Version v2.0 | 2026                               ║
+╚══════════════════════════════════════════════════════════════════╝
+
+說明 / Notes：
+  所有資產均為「可選」。/ All assets are "optional".
+  若對應檔案不存在，遊戲會自動使用內建幾何圖形/預設顏色代替。
+  If a file doesn't exist, the game uses built-in graphics/colors automatically.
+  只需將圖片命名為正確名稱並放入正確資料夾，重新整理瀏覽器即生效。
+  Just name files correctly and place in the right folder, then refresh the browser.
+  無需修改任何程式碼。/ No code changes needed.
+
+重要更新 / Important Update：
+  遊戲使用 PNG 序列（多張圖片）實現動畫效果，而非 GIF。
+  Game uses PNG sequence (multiple images) for animation, not GIF.
+  詳情請參閱「第九節：動畫系統」。
+  See "Section IX: Animation System" for details.
+
+═══════════════════════════════════════════════════════════════════
+📁 一、劇情過場圖片 / CUTSCENES
+   資料夾 / Folder：images/cutscenes/
+═══════════════════════════════════════════════════════════════════
+
+遊戲會按順序讀取這些圖片，點擊即進入下一張。
+Game reads images in order; click to advance.
+如果某張不存在，自動跳過。/ Missing images are skipped automatically.
+
+檔名 / Filename              說明 / Description                      建議尺寸 / Suggested Size
+───────────────────────────────────────────────────────────────────────────────
+story_intro_1.png            開場：學生在桌前苦惱           960×540 px
+                             Opening: Student worrying at desk
+story_intro_2.png            開場：天使與惡魔出現           960×540 px
+                             Opening: Angel and Devil appear
+story_intro_3.png            開場：學生沉沉睡去             960×540 px
+                             Opening: Student falls asleep
+story_intro_4.png            開場：進入夢境世界             960×540 px
+                             Opening: Entering the dream world
+
+story_level1_pre.png          第1關前過場                      960×540 px
+                             Pre-Level 1 cutscene
+story_level1_post.png        第1關後過場（低分結果）        960×540 px
+                             Post-Level 1 (low score result)
+story_level2_pre.png        第2關前過場（學習引用技能）    960×540 px
+                             Pre-Level 2 (learning citation)
+story_level2_post.png        第2關後過場                    960×540 px
+                             Post-Level 2 cutscene
+story_level3_pre.png        第3關前過場（學習共謀技能）    960×540 px
+                             Pre-Level 3 (learning collude)
+story_level3_post.png       第3關後過場                    960×540 px
+                             Post-Level 3 cutscene
+story_level4_pre.png        第4關前過場（最終挑戰）        960×540 px
+                             Pre-Level 4 (final challenge)
+story_level4_post.png       第4關後過場（畢業）            960×540 px
+                             Post-Level 4 (graduation)
+
+story_graduation.png       畢業典禮最終畫面               960×540 px
+                             Graduation ceremony final scene
+story_gameover.png         遊戲結束畫面                   960×540 px
+                             Game over scene
+
+skill_card_bg.png          技能卡背景紋理                 600×400 px
+                             Skill card background texture
+
+格式要求 / Format Requirements：
+  - PNG（支援透明）或 JPG / PNG (transparent) or JPG
+  - 建議 960×540（16:9）/ Recommended 960×540 (16:9)
+  - 最大 500KB，建議使用 JPG 格式 / Max 500KB, JPG recommended
+  - 遊戲會自動縮放至畫面大小 / Game scales to fit screen
+
+═══════════════════════════════════════════════════════════════════
+📁 二、場景背景 / BACKGROUNDS
+   資料夾 / Folder：images/backgrounds/
+═══════════════════════════════════════════════════════════════════
+
+檔名 / Filename              說明 / Description                      建議尺寸 / Suggested Size
+───────────────────────────────────────────────────────────────────────────────
+bg_library.png             第1關：圖書館                  960×540 px
+                             Level 1: Library
+bg_computer_lab.png        第2關：電腦室                  960×540 px
+                             Level 2: Computer Lab
+bg_lecture.png             第3關：演講廳                  960×540 px
+                             Level 3: Lecture Hall
+bg_cyberspace.png          第4關：網絡空間                  960×540 px
+                             Level 4: Cyberspace
+bg_title.png               標題畫面背景                   960×540 px
+                             Title screen background
+bg_menu.png               選單背景                       960×540 px
+                             Menu background
+
+格式要求 / Format Requirements：
+  - PNG 或 JPG / PNG or JPG
+  - 960×540 px（16:9）/ 960×540 px (16:9)
+  - 背景圖會完整鋪滿畫面，棋盤格作為備用圖案
+  - Game background fills entire screen; checkerboard is fallback
+  - 建議用較暗、有氣氛的設計 / Dim, atmospheric designs recommended
+
+═══════════════════════════════════════════════════════════════════
+📁 三、玩家角色 / PLAYER CHARACTERS
+   資料夾 / Folder：images/characters/
+═══════════════════════════════════════════════════════════════════
+📁 三、玩家角色 / PLAYER CHARACTERS
+   資料夾 / Folder：images/characters/
+
+使用 PNG 序列圖片，自動偵測幀數並播放動畫。
+Use PNG sequence images; system auto-detects frames and plays animation.
+
+檔名 / Filename              說明 / Description                      建議尺寸 / Suggested Size
+──────────────────────────────────────────────────────────────────────────────
+【學生 / Student】
+player_student_idle_1.png    學生待機第1幀                   64×64 px
+                              Student idle frame 1
+player_student_idle_2.png    學生待機第2幀                   64×64 px
+                              Student idle frame 2
+player_student_idle_3.png    學生待機第3幀（可選）           64×64 px
+                              Student idle frame 3 (optional)
+player_student_move_1.png    學生移動第1幀                   64×64 px
+                              Student move frame 1
+player_student_move_2.png    學生移動第2幀                   64×64 px
+                              Student move frame 2
+player_student_move_3.png    學生移動第3幀（可選）           64×64 px
+                              Student move frame 3 (optional)
+
+【老師 / Teacher】
+player_teacher_idle_1.png    老師待機第1幀                   64×64 px
+player_teacher_idle_2.png    老師待機第2幀                   64×64 px
+player_teacher_move_1.png    老師移動第1幀                   64×64 px
+player_teacher_move_2.png    老師移動第2幀                   64×64 px
+
+【行政人員 / Admin】
+player_admin_idle_1.png      行政人員待機第1幀               64×64 px
+player_admin_idle_2.png      行政人員待機第2幀               64×64 px
+player_admin_move_1.png      行政人員移動第1幀               64×64 px
+player_admin_move_2.png      行政人員移動第2幀               64×64 px
+
+格式要求 / Format Requirements：
+  - PNG 序列 / PNG sequence: player_{role}_{state}_{number}.png
+  - 數字從 1 開始，必須連續 / Numbers start from 1, must be consecutive
+  - 64×64 px / 64×64 px
+  - 透明背景 / Transparent background
+  - 2-4 幀即可流暢播放 / 2-4 frames for smooth animation
+  - 單張圖片 = 靜態，多張 = 自動播放動畫 / Single = static, multiple = auto animation
+
+═══════════════════════════════════════════════════════════════════
+📁 四、敵人角色 / ENEMIES
+   資料夾 / Folder：images/enemies/
+═══════════════════════════════════════════════════════════════════
+📁 四、敵人角色 / ENEMIES
+   資料夾 / Folder：images/enemies/
+
+每隻敵人有多種狀態，每種狀態使用 PNG 序列。
+Each enemy has multiple states, each using PNG sequence.
+
+檔名 / Filename              說明 / Description                      建議尺寸 / Suggested Size
+──────────────────────────────────────────────────────────────────────────────
+【抄襲貓 / Copy Cat】
+enemy_plagiarism_1.png         普通形態第1幀                   48×48 px
+
+     enemy_plagiarism_2.png         普通形態第2幀                   48×48 px
+
+     enemy_plagiarism_fast_1.png    加速形態第1幀（追趕時）         48×48 px
+
+     enemy_plagiarism_fast_2.png    加速形態第2幀                   48×48 px
+
+     enemy_plagiarism_hit_1.png     被擊中形態                     48×48 px
+                              Hit form
+
+【AI幽靈 / AI Blob】
+enemy_aiblob_1.png          普通形態第1幀                   48×48 px
+enemy_aiblob_2.png          普通形態第2幀                   48×48 px
+enemy_aiblob_grow_1.png     膨脹中形態第1幀                 48×48 px
+                              Growing form frame 1
+enemy_aiblob_grow_2.png     膨脹中形態第2幀                 48×48 px
+enemy_aiblob_hit_1.png      被擊中形態                     48×48 px
+
+【論文工廠 / Essay Mill】
+enemy_essaymill_1.png       普通形態第1幀                   48×48 px
+enemy_essaymill_2.png       普通形態第2幀                   48×48 px
+enemy_essaymill_lure_1.png  誘惑形態第1幀（送禮物時）       48×48 px
+                              Lure form frame 1 (giving gifts)
+enemy_essaymill_lure_2.png  誘惑形態第2幀                   48×48 px
+enemy_essaymill_hit_1.png   爆炸形態                       48×48 px
+
+【假資料 / Fake Source】
+enemy_fakesource_1.png      偽裝形態第1幀                   48×48 px
+                              Disguised form frame 1
+enemy_fakesource_2.png      偽裝形態第2幀                   48×48 px
+enemy_fakesource_reveal_1.png  揭露形態第1幀                 48×48 px
+                              Revealed form frame 1
+enemy_fakesource_reveal_2.png  揭露形態第2幀                 48×48 px
+enemy_fakesource_hit_1.png  被擊中形態                     48×48 px
+
+【共謀 / Collude】
+enemy_collude_1.png         普通形態第1幀                   48×48 px
+enemy_collude_2.png         普通形態第2幀                   48×48 px
+enemy_collude_pair_1.png    成對形態第1幀（兩人出現）       48×48 px
+                              Pair form frame 1 (two appearing)
+enemy_collude_pair_2.png    成對形態第2幀                   48×48 px
+enemy_collude_hit_1.png     被擊中形態                     48×48 px
+
+格式要求 / Format Requirements：
+  - PNG 序列 / PNG sequence: enemy_{id}_{state}_{number}.png
+  - 數字從 1 開始，必須連續 / Numbers start from 1, must be consecutive
+  - 48×48 px 基本大小 / 48×48 px base size
+  - 透明背景 / Transparent background
+  - 2-4 幀即可流暢播放 / 2-4 frames for smooth animation
+  - 優先順序：PNG 序列 > 單張 PNG > 幾何圖形 / Priority: PNG sequence > single PNG > geometry
+
+═══════════════════════════════════════════════════════════════════
+📁 五、收集物 / COLLECTIBLES
+   資料夾 / Folder：images/collectibles/
+
+使用 PNG 序列實現漂浮動畫效果。
+Use PNG sequence for floating animation effect.
+
+檔名 / Filename              說明 / Description                      建議尺寸 / Suggested Size
+──────────────────────────────────────────────────────────────────────────────
+【期刊文章 / Journal】
+collectible_journal_1.png   期刊第1幀（漂浮動畫）          32×32 px
+                              Journal frame 1 (floating)
+collectible_journal_2.png   期刊第2幀                     32×32 px
+collectible_journal_3.png   期刊第3幀（可選）             32×32 px
+
+【學術書籍 / Book】
+collectible_book_1.png      書籍第1幀                     32×32 px
+collectible_book_2.png      書籍第2幀                     32×32 px
+collectible_book_3.png      書籍第3幀（可選）             32×32 px
+
+【驗證數據 / Data】
+collectible_data_1.png      數據第1幀                     32×32 px
+collectible_data_2.png      數據第2幀                     32×32 px
+collectible_data_3.png      數據第3幀（可選）             32×32 px
+
+【專家訪談 / Expert】
+collectible_expert_1.png    專家訪談第1幀                 32×32 px
+collectible_expert_2.png    專家訪談第2幀                 32×32 px
+collectible_expert_3.png    專家訪談第3幀（可選）         32×32 px
+
+格式要求 / Format Requirements：
+  - PNG 序列 / PNG sequence: collectible_{id}_{number}.png
+  - 數字從 1 開始，必須連續 / Numbers start from 1, must be consecutive
+  - 32×32 px
+  - 透明背景 / Transparent background
+  - 建議發光設計 / Glowing icon design recommended
+  - 單張 = 靜態，多張 = 漂浮動畫 / Single = static, multiple = floating animation
+
+═══════════════════════════════════════════════════════════════════
+📁 六、UI 元素 / UI ELEMENTS
+   資料夾 / Folder：images/ui/
+═══════════════════════════════════════════════════════════════════
+
+檔名 / Filename              說明 / Description                      建議尺寸 / Suggested Size
+───────────────────────────────────────────────────────────────────────────────
+icon_angel.png            天使圖示（劇情用）             128×128 px
+                             Angel icon (story)
+icon_devil.png            惡魔圖示（劇情用）             128×128 px
+                             Devil icon (story)
+icon_graduation.png       畢業帽圖示                     128×128 px
+                             Graduation cap icon
+btn_start.png            開始按鈕樣式                   240×60 px
+                             Start button style
+btn_continue.png        繼續按鈕樣式                   240×60 px
+                             Continue button style
+frame_skill_card.png     技能卡外框                     400×280 px
+                             Skill card frame
+frame_tooltip.png        提示框外框                     280×200 px
+                             Tooltip frame
+logo.png                遊戲 Logo                      480×120 px
+                             Game Logo
+
+格式要求 / Format Requirements：
+  - PNG，透明背景 / PNG, transparent
+  - 若不存在，使用文字或 CSS 樣式代替 / Text/CSS used if missing
+
+═══════════════════════════════════════════════════════════════════
+🎵 七、背景音樂 / BACKGROUND MUSIC
+   資料夾 / Folder：audio/music/
+═══════════════════════════════════════════════════════════════════
+
+檔名 / Filename              說明 / Description                      格式 / Format
+───────────────────────────────────────────────────────────────────────────────
+bgm_title.mp3             標題畫面音樂                   MP3, 循環 / Loop
+                             Title screen music
+bgm_level1.mp3           第1關 遊戲音樂（緊張感）       MP3, 循環 / Loop
+                             Level 1 music (tense)
+bgm_level2.mp3           第2關 遊戲音樂（稍微放鬆）     MP3, 循環 / Loop
+                             Level 2 music (relaxed)
+bgm_level3.mp3           第3關 遊戲音樂                 MP3, 循環 / Loop
+                             Level 3 music
+bgm_level4.mp3           第4關 遊戲音樂（史詩感）       MP3, 循環 / Loop
+                             Level 4 music (epic)
+bgm_skill.mp3            技能選擇畫面音樂               MP3, 循環 / Loop
+                             Skill screen music
+bgm_result.mp3           結果畫面音樂                   MP3, 循環 / Loop
+                             Result screen music
+bgm_graduation.mp3       畢業典禮音樂                   MP3, 非循環 / No loop
+                             Graduation music
+
+格式要求 / Format Requirements：
+  - MP3 或 OGG（建議兩種都提供）/ MP3 or OGG (both recommended)
+  - 碼率 / Bitrate：128~192 kbps
+  - 循環音樂：無縫循環 / Looping: seamless loop
+  - 若無音樂，遊戲靜音運行 / Silent if missing
+
+═══════════════════════════════════════════════════════════════════
+🔊 八、音效 / SOUND EFFECTS
+   資料夾 / Folder：audio/sfx/
+═══════════════════════════════════════════════════════════════════
+
+檔名 / Filename              說明 / Description                      時長 / Duration
+───────────────────────────────────────────────────────────────────────────────
+sfx_collect.mp3          收集好資料音效                 0.3~0.5 秒
+                             Collect good source
+sfx_hit.mp3            被敵人碰到音效                 0.3~0.5 秒
+                             Enemy collision
+sfx_skill_unlock.mp3     技能解鎖音效                 1~2 秒
+                             Skill unlock
+sfx_level_complete.mp3   關卡完成音效                 2~3 秒
+                             Level complete
+sfx_grade_a.mp3         A級音效（歡呼）                2~3 秒
+                             Grade A (cheer)
+sfx_grade_f.mp3         F級音效（失落）                2~3 秒
+                             Grade F (sad)
+sfx_enemy_spawn.mp3      敵人出現音效                 0.3~0.5 秒
+                             Enemy spawn
+sfx_fake_reveal.mp3      假資料被識破音效               0.5~1 秒
+                             Fake source revealed
+sfx_aiblob_grow.mp3      AI幽靈膨脹音效                 0.5~1 秒
+                             AI Blob growing
+sfx_button_click.mp3      按鈕點擊音效                 0.1~0.3 秒
+                             Button click
+sfx_graduation.mp3      畢業音效                   3~5 秒
+                             Graduation sound
+
+格式要求 / Format Requirements：
+  - MP3 或 OGG / MP3 or OGG
+  - 碼率 / Bitrate：128 kbps
+  - 音效簡短清脆 / Short and crisp sounds
+
+═══════════════════════════════════════════════════════════════════
+📋 快速參考表 / QUICK REFERENCE
+═══════════════════════════════════════════════════════════════════
+
+📁 九、動畫系統 / ANIMATION SYSTEM
+   資料夾：所有圖片資料夾
+═══════════════════════════════════════════════════════════════════
+
+動畫原理 / How Animation Works：
+  使用多張 PNG 圖片代替 GIF，程式自動偵測並循環播放。
+  系統根據 config.txt 中的 animation_fps 參數控制播放速度。
+  Use multiple PNG images instead of GIF for smooth animations.
+  System reads animation_fps from config.txt to control playback speed.
+
+命名規範 / Naming Convention：
+  {type}_{name}_{number}.png
+  數字從 1 開始，程式自動偵測最大數字。
+  Numbers start from 1, program auto-detects max frame number.
+
+玩家角色動畫 / Player Animation：
+  格式 / Format: player_{role}_{state}_{number}.png
+  範例 / Examples:
+    player_student_idle_1.png     學生待機第1幀 / Student idle frame 1
+    player_student_idle_2.png     學生待機第2幀 / Student idle frame 2
+    player_student_idle_3.png     學生待機第3幀 / Student idle frame 3
+    player_student_move_1.png     學生移動第1幀 / Student move frame 1
+    player_student_move_2.png     學生移動第2幀 / Student move frame 2
+    player_student_move_3.png     學生移動第3幀 / Student move frame 3
+
+敵人動畫 / Enemy Animation：
+  格式 / Format: enemy_{id}_{state}_{number}.png
+  範例 / Examples:
+enemy_plagiarism_1.png        抄襲第1幀 / Plagiarism frame 1
+
+    enemy_plagiarism_2.png        抄襲第2幀 / Plagiarism frame 2
+
+    enemy_plagiarism_fast_1.png   抄襲加速第1幀 / Plagiarism fast frame 1
+
+    enemy_plagiarism_fast_2.png   抄襲加速第2幀 / Plagiarism fast frame 2
+
+收集物動畫 / Collectible Animation：
+  格式 / Format: collectible_{id}_{number}.png
+  範例 / Examples:
+    collectible_journal_1.png   期刊第1幀 / Journal frame 1
+    collectible_journal_2.png   期刊第2幀 / Journal frame 2
+
+說明 / Notes：
+  - 只有 1 張圖片時顯示靜態 / Single image = static (no animation)
+  - 2 張或以上自動播放動畫 / 2+ images = automatic animation
+  - 數字必須連續 / Numbers must be consecutive (1, 2, 3...)
+  - 建議每個動畫 2-4 幀 / Recommended 2-4 frames per animation
+
+config.txt 設定 / config.txt Settings：
+  [ANIMATION]
+  animation_fps = 10    # 每秒幀數 (建議值 8~15)
+
+═══════════════════════════════════════════════════════════════════
+
+資料夾 / Folder           用途 / Purpose              檔案 / Files
+────────────────────────────────────────────────────────────────
+images/cutscenes/        劇情過場 / Cutscenes      story_*.png
+images/backgrounds/      場景背景 / Backgrounds     bg_*.png
+images/characters/       玩家角色 / Characters     player_*_*.png
+images/enemies/          敵人 / Enemies            enemy_*_*.png
+images/collectibles/     收集物 / Collectibles    collectible_*_*.png
+images/ui/             UI元素 / UI             icon_*, btn_*, frame_*
+audio/music/            背景音樂 / BGM          bgm_*.mp3
+audio/sfx/             音效 / SFX             sfx_*.mp3
+
+═══════════════════════════════════════════════════════════════════
+⚠️ 重要提示 / IMPORTANT NOTES
+═══════════════════════════════════════════════════════════════════
+
+1. 檔名大小寫敏感 / Filenames are case-sensitive
+   正確 / Correct：enemy_plagiarism_1.png
+   錯誤 / Wrong：Enemy_Copycat_1.PNG
+
+2. 動畫優先順序 / Animation Priority：
+   多張 PNG (player_*_1.png, *_2.png...) → 自動播放動畫
+   單張 PNG → 顯示靜態
+   都沒有 → 用幾何圖形
+
+3. 音效優先順序 / SFX Priority：
+   .mp3 存在 → 用 .mp3 / .mp3 → use .mp3
+   不存在 → 靜音 / None → silent
+
+4. 圖片格式建議 / Image Format Recommendations：
+   透明背景 → PNG / Transparent → PNG
+   全畫面背景 → JPG / Full screen → JPG
+   動畫 → PNG 序列 (建議) / Animation → PNG sequence (recommended)
+
+5. 尺寸建議 / Size Recommendations：
+   過場和背景：960×540（16:9）/ Cutscenes/BG: 960×540 (16:9)
+   玩家角色：64×64 / Player: 64×64
+   敵人：48×48 / Enemy: 48×48
+   收集物：32×32 / Collectible: 32×32
+
+6. 更新資產後只需重新整理瀏覽器（F5），不需要修改任何程式碼。
+   After adding assets, just refresh (F5). No code changes needed.

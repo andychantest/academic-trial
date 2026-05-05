@@ -1,0 +1,732 @@
+# =============================================================
+# THE ACADEMIC TRIAL - 遊戲設定檔
+# Game Configuration File
+# =============================================================
+# 使用說明 | Instructions:
+#   - 修改 = 號後面的數值 | Edit values after the = sign
+#   - 儲存檔案後重新整理瀏覽器即可生效 | Save and refresh browser to apply
+#   - # 開頭的行是說明，不影響遊戲 | Lines starting with # are comments
+# =============================================================
+
+# --------------------------------------------------------------
+# 開發者設定 | DEVELOPER SETTINGS
+# --------------------------------------------------------------
+
+[DEBUG]
+# 調試模式 (true/false) - 顯示碰撞區域紅線 | Debug mode (true/false) - Show collision area with red lines
+debug_mode = true
+
+
+# --------------------------------------------------------------
+# 全域設定 | GLOBAL SETTINGS
+# --------------------------------------------------------------
+[GLOBAL]
+
+# 遊戲標題 | Game title
+game_title = The Academic Trial
+
+# 語言設定 (en/zh) | Language setting
+language = en
+
+# 是否顯示 FPS | Show FPS counter
+show_fps = false
+
+# 時區設定 | Timezone setting (e.g., GMT+8, GMT-5)
+timezone = GMT+8
+
+# 完成全部關卡後顯示的訊息 | Message shown after completing all levels
+completion_message = Congratulations! You have completed all 4 levels!
+
+# --------------------------------------------------------------
+# 字型大小設定 | FONT SIZE SETTINGS
+# --------------------------------------------------------------
+
+# 玩家字型大小 (像素) | Player font size (pixels)
+font_size_player = 10
+
+# 敵人字型大小 (像素) | Enemy font size (pixels)
+font_size_enemy = 10
+
+# 收集物字型大小 (像素) | Collectible font size (pixels)
+font_size_collectible = 10
+
+# 收集物大小 (像素) | Collectible size (pixels)
+collectible_size = 30
+
+# 收集物移動速度 (建議值: 0.5 ~ 2.0) | Collectible movement speed (Recommended: 0.5 ~ 2.0)
+collectible_move_speed = 1.2
+
+# 收集物顯示時間 (秒, 建議值: 10 ~ 30) | Collectible life time in seconds (Recommended: 10 ~ 30)
+collectible_life_seconds = 20
+
+
+# --------------------------------------------------------------
+# 玩家設定 | PLAYER SETTINGS
+# --------------------------------------------------------------
+[PLAYER]
+
+# 移動速度 (建議值: 2.0 ~ 5.0) | Movement speed (Recommended: 2.0 ~ 5.0)
+move_speed = 3.0
+
+# 碰撞半徑 (像素) | Collision radius (pixels)
+size = 30
+
+# 視覺大小 (像素) - 圖片顯示尺寸 | Visual size (pixels) - Image display size
+visual_size = 80
+
+# 受擊後的無敵時間 (毫秒, 建議值: 500 ~ 2000) | Invincibility duration after hit (ms, Recommended: 500 ~ 2000)
+invincibility_ms = 800
+
+# --------------------------------------------------------------
+# 角色設定 | ROLE SETTINGS
+# --------------------------------------------------------------
+
+# 學生角色啟用 | Enable Student role
+enable_student = true
+
+# 教師角色啟用 | Enable Teacher role
+enable_teacher = false
+
+# 管理員角色啟用 | Enable Admin role
+enable_admin = false
+
+#用途	    建議值
+#小型玩家	size = 15, visual_size = 32
+#中型玩家	size = 20, visual_size = 48
+#大型玩家	size = 25, visual_size = 64
+
+# --------------------------------------------------------------
+# 動畫設定 | ANIMATION SETTINGS
+# --------------------------------------------------------------
+
+[ANIMATION]
+# 每秒幀數 (建議值: 8 ~ 15, 數值越大動畫越流暢) | Frames per second (Recommended: 8 ~ 15)
+animation_fps = 10
+
+# --------------------------------------------------------------
+# 關卡設定 | LEVEL SETTINGS
+# --------------------------------------------------------------
+
+[LEVEL_1]
+# 作業名稱 | Assignment name
+assignment_name = First Assignment
+
+# 倒數時間 (秒) | Countdown time (seconds)
+time_limit = 35
+
+# 起始敵人數量 | Initial enemy count
+enemy_count = 3
+
+# 敵人整體速度倍數 (1.0 = 正常) | Enemy speed multiplier (1.0 = normal)
+enemy_speed_multiplier = 0.9
+
+# 敵人整體傷害倍數 | Enemy damage multiplier
+enemy_damage_multiplier = 0.8
+
+# 每隔幾秒補充一個敵人 (0 = 不補充) | Enemy respawn interval (seconds, 0 = no respawn)
+enemy_respawn_seconds = 15
+
+# 每隔幾秒生成一個收集物 | Collectible spawn interval (seconds)
+collectible_spawn_seconds = 5
+
+# 假來源比例 (0.0 ~ 1.0) | Fake source ratio
+fake_source_rate = 0.7
+
+# 關卡背景圖片檔名 (放在 images/backgrounds 資料夾) | Background image filename
+background_image = bg_library.png
+
+# 關卡背景音樂檔名 (放在 audio/music 資料夾) | Background music filename
+background_music = bgm_tense.mp3
+
+# 關卡說明文字 | Level description
+level_description = You have no skills yet. Face the threats with nothing but instinct.
+
+# 結束後顯示的低分訊息 | Low score result message
+result_message_low = Without any knowledge, threats overwhelm you. This is how it feels unprepared.
+
+# 結束後顯示的高分訊息 | High score result message
+result_message_high = Impressive! Even without skills you managed to survive.
+
+
+[LEVEL_2]
+# 作業名稱 | Assignment name
+assignment_name = Research Paper
+
+# 倒數時間 (秒) | Countdown time (seconds)
+time_limit = 40
+
+# 起始敵人數量 | Initial enemy count
+enemy_count = 4
+
+# 敵人整體速度倍數 (1.0 = 正常) | Enemy speed multiplier (1.0 = normal)
+enemy_speed_multiplier = 1.0
+
+# 敵人整體傷害倍數 | Enemy damage multiplier
+enemy_damage_multiplier = 1.0
+
+# 每隔幾秒補充一個敵人 (0 = 不補充) | Enemy respawn interval (seconds, 0 = no respawn)
+enemy_respawn_seconds = 10
+
+# 每隔幾秒生成一個收集物 | Collectible spawn interval (seconds)
+collectible_spawn_seconds = 4
+
+# 假來源比例 (0.0 ~ 1.0) | Fake source ratio
+fake_source_rate = 0.55
+
+# 關卡背景圖片檔名 (放在 images/backgrounds 資料夾) | Background image filename
+background_image = bg_computer_lab.png
+
+# 關卡背景音樂檔名 (放在 audio/music 資料夾) | Background music filename
+background_music = bgm_study.mp3
+
+# 關卡說明文字 | Level description
+level_description = You learned Proper Citation. Watch how knowledge protects you.
+
+# 結束後顯示的低分訊息 | Low score result message
+result_message_low = Keep practising your citation skills. Every source needs a proper reference.
+
+# 結束後顯示的高分訊息 | High score result message
+result_message_high = Your citation skills made a real difference to your grade!
+
+
+[LEVEL_3]
+# 作業名稱 | Assignment name
+assignment_name = Group Project
+
+# 倒數時間 (秒) | Countdown time (seconds)
+time_limit = 45
+
+# 起始敵人數量 | Initial enemy count
+enemy_count = 5
+
+# 敵人整體速度倍數 (1.0 = 正常) | Enemy speed multiplier (1.0 = normal)
+enemy_speed_multiplier = 1.0
+
+# 敵人整體傷害倍數 | Enemy damage multiplier
+enemy_damage_multiplier = 1.0
+
+# 每隔幾秒補充一個敵人 (0 = 不補充) | Enemy respawn interval (seconds, 0 = no respawn)
+enemy_respawn_seconds = 7
+
+# 每隔幾秒生成一個收集物 | Collectible spawn interval (seconds)
+collectible_spawn_seconds = 3
+
+# 假來源比例 (0.0 ~ 1.0) | Fake source ratio
+fake_source_rate = 0.45
+
+# 關卡背景圖片檔名 (放在 images/backgrounds 資料夾) | Background image filename
+background_image = bg_lecture.png
+
+# 關卡背景音樂檔名 (放在 audio/music 資料夾) | Background music filename
+background_music = bgm_study.mp3
+
+# 關卡說明文字 | Level description
+level_description = Two skills unlocked! Use Plagiarism Awareness to slow down cheaters and Ethical Work to block essay factories!
+
+# 結束後顯示的低分訊息 | Low score result message
+result_message_low = Stay away from threats! Know what behaviors constitute academic misconduct.
+
+# 結束後顯示的高分訊息 | High score result message
+result_message_high = Excellent! You navigated group work integrity with confidence.
+
+
+[LEVEL_4]
+# 作業名稱 | Assignment name
+assignment_name = Final Year Project (FYP)
+
+# 倒數時間 (秒) | Countdown time (seconds)
+time_limit = 50
+
+# 起始敵人數量 | Initial enemy count
+enemy_count = 6
+
+# 敵人整體速度倍數 (1.0 = 正常) | Enemy speed multiplier (1.0 = normal)
+enemy_speed_multiplier = 1.1
+
+# 敵人整體傷害倍數 | Enemy damage multiplier
+enemy_damage_multiplier = 1.0
+
+# 每隔幾秒補充一個敵人 (0 = 不補充) | Enemy respawn interval (seconds, 0 = no respawn)
+enemy_respawn_seconds = 5
+
+# 每隔幾秒生成一個收集物 | Collectible spawn interval (seconds)
+collectible_spawn_seconds = 3
+
+# 假來源比例 (0.0 ~ 1.0) | Fake source ratio
+fake_source_rate = 0.4
+
+# 關卡背景圖片檔名 (放在 images/backgrounds 資料夾) | Background image filename
+background_image = bg_cyberspace.png
+
+# 關卡背景音樂檔名 (放在 audio/music 資料夾) | Background music filename
+background_music = bgm_epic.mp3
+
+# 關卡說明文字 | Level description
+level_description = All four skills active. This is your graduation challenge. Face every threat.
+
+# 結束後顯示的低分訊息 | Low score result message
+result_message_low = Review your skills and try again. The FYP is your ultimate test.
+
+# 結束後顯示的高分訊息 | High score result message
+result_message_high = Outstanding! You completed your Final Year Project with full integrity!
+
+
+# --------------------------------------------------------------
+# 敵人設定 | ENEMY SETTINGS
+# --------------------------------------------------------------
+# 參數說明 | Parameter descriptions:
+#   enabled: 是否啟用 (true/false) | Enable this enemy (true/false)
+#   label: 顯示名稱 | Display label
+#   color: 顏色 (十六進位) | Color (hex)
+#   speed: 移動速度 | Movement speed
+#   damage: 每次接觸扣除的誠信值 | Integrity loss per hit
+#   size: 碰撞半徑 (像素) | Collision radius (pixels)
+#   spawn_weight: 出現機率權重 | Spawn weight (higher = more common)
+# --------------------------------------------------------------
+
+[ENEMY_PLAGIARISM]
+# 是否啟用 (true/false) | Enable this enemy (true/false)
+enabled = true
+
+# 顯示名稱 | Display label
+label = PLAGIARISM
+
+# 顏色 (十六進位) | Color (hex)
+color = #e24b4b
+
+# 移動速度 | Movement speed
+speed = 1.1
+
+# 每次接觸扣除的誠信值 | Integrity loss per hit
+damage = 30
+
+# 碰撞半徑 (像素) | Collision radius (pixels)
+size = 30
+
+# 出現機率權重 | Spawn weight (higher = more common)
+spawn_weight = 3
+
+# 違規類型 | Violation type
+violation_type = PLAGIARISM
+
+# 違規說明 - 做了什麼 | What happened
+what = Submits another student's work word-for-word as their own.
+
+# 違規說明 - 為什麼是錯的 | Why it's wrong
+why = Denies the original author credit and gives an unfair grade advantage.
+
+# 後果 | Consequence
+consequence = Zero grade + formal misconduct hearing on academic record.
+
+
+[ENEMY_AIBLOB]
+# 是否啟用 (true/false) | Enable this enemy (true/false)
+enabled = true
+
+# 顯示名稱 | Display label
+label = AI BLOB
+
+# 顏色 (十六進位) | Color (hex)
+color = #a855f7
+
+# 移動速度 | Movement speed
+speed = 0.65
+
+# 每次接觸扣除的誠信值 | Integrity loss per hit
+damage = 20
+
+# 碰撞半徑 (像素) | Collision radius (pixels)
+size = 30
+
+# 出現機率權重 | Spawn weight (higher = more common)
+spawn_weight = 3
+
+# AI Blob 特殊：每秒增長大小 | AI Blob special: grows per second
+grow_rate = 0.015
+
+# AI Blob 成長率 - 按等級區分 | AI Blob grow rate - by level
+grow_rate_level_1 = 0.008
+grow_rate_level_2 = 0.010
+grow_rate_level_3 = 0.012
+grow_rate_level_4 = 0.015
+
+# 違規類型 | Violation type
+violation_type = UNDISCLOSED AI USE
+
+# 違規說明 - 做了什麼 | What happened
+what = Submits AI-generated text without disclosure or critical thinking.
+
+# 違規說明 - 為什麼是錯的 | Why it's wrong
+why = Misrepresents your own ability and bypasses genuine learning.
+
+# 後果 | Consequence
+consequence = Work rejected. Integrity record flagged. Possible suspension.
+
+
+[ENEMY_ESSAYMILL]
+# 是否啟用 (true/false) | Enable this enemy (true/false)
+enabled = true
+
+# 顯示名稱 | Display label
+label = ESSAY MILL
+
+# 顏色 (十六進位) | Color (hex)
+color = #f97316
+
+# 移動速度 | Movement speed
+speed = 0.95
+
+# 每次接觸扣除的誠信值 | Integrity loss per hit
+damage = 50
+
+# 碰撞半徑 (像素) | Collision radius (pixels)
+size = 30
+
+# 出現機率權重 | Spawn weight (higher = more common)
+spawn_weight = 2
+
+# 違規類型 | Violation type
+violation_type = CONTRACT CHEATING
+
+# 違規說明 - 做了什麼 | What happened
+what = A paid service that writes your academic work (essays, research papers, dissertations, etc.) for you.
+
+# 違規說明 - 為什麼是錯的 | Why it's wrong
+why = Someone else is earning your qualification. This is academic fraud.
+
+# 後果 | Consequence
+consequence = Expulsion. Illegal in many countries. Degree can be revoked.
+
+# 投射物間隔（秒）| Projectile interval (seconds)
+projectile_interval = 3
+
+# 投射物速度 | Projectile speed
+projectile_speed = 2.5
+
+# 投射物傷害 | Projectile damage
+projectile_damage = 10
+
+
+[ENEMY_FAKESOURCE]
+# 是否啟用 (true/false) | Enable this enemy (true/false)
+enabled = true
+
+# 顯示名稱 | Display label
+label = FAKE SOURCE
+
+# 顏色 (十六進位) | Color (hex)
+color = #eab308
+
+# 移動速度 | Movement speed
+speed = 0.8
+
+# 每次接觸扣除的誠信值 | Integrity loss per hit
+damage = 12
+
+# 碰撞半徑 (像素) | Collision radius (pixels)
+size = 30
+
+# 出現機率權重 | Spawn weight (higher = more common)
+spawn_weight = 2
+
+# 偽裝距離：超過此距離會偽裝成好的收集物 | Disguise distance: beyond this, disguises as collectible
+disguise_distance = 90
+
+# 違規類型 | Violation type
+violation_type = FAKE CITATION
+
+# 違規說明 - 做了什麼 | What happened
+what = A fabricated or unreliable source passed off as legitimate.
+
+# 違規說明 - 為什麼是錯的 | Why it's wrong
+why = Undermines your argument and spreads misinformation.
+
+# 後果 | Consequence
+consequence = Grade penalty. Resubmission required. Loss of credibility.
+
+
+[ENEMY_COLLUDE]
+# 是否啟用 (true/false) | Enable this enemy (true/false)
+enabled = false
+
+# 顯示名稱 | Display label
+label = COLLUDE
+
+# 顏色 (十六進位) | Color (hex)
+color = #06b6d4
+
+# 移動速度 | Movement speed
+speed = 0.85
+
+# 每次接觸扣除的誠信值 | Integrity loss per hit
+damage = 21
+
+# 碰撞半徑 (像素) | Collision radius (pixels)
+size = 30
+
+# 出現機率權重 | Spawn weight (higher = more common)
+spawn_weight = 2
+
+# 違規類型 | Violation type
+violation_type = COLLUSION
+
+# 違規說明 - 做了什麼 | What happened
+what = Shares answers or submits the same work as another student.
+
+# 違規說明 - 為什麼是錯的 | Why it's wrong
+why = Even if you helped a friend, both parties face the same consequences.
+
+# 後果 | Consequence
+consequence = Both students receive zero. Misconduct noted for both.
+
+
+# --------------------------------------------------------------
+# 收集物設定 | COLLECTIBLE SETTINGS
+# --------------------------------------------------------------
+# 參數說明 | Parameter descriptions:
+#   enabled: 是否啟用 (true/false) | Enable this collectible (true/false)
+#   label: 顯示名稱 | Display label
+#   color: 顏色 (十六進位) | Color (hex)
+#   size: 碰撞半徑 (像素) | Collision radius (pixels)
+#   points: 收集後獲得的分數 | Points earned on collection
+# --------------------------------------------------------------
+
+[COLLECTIBLE_JOURNAL]
+# 是否啟用 (true/false) | Enable this collectible (true/false)
+enabled = true
+
+# 顯示名稱 | Display label
+label = Journal Article
+
+# 顏色 (十六進位) | Color (hex)
+color = #22c55e
+
+# 碰撞半徑 (像素) | Collision radius (pixels)
+size = 13
+
+# 收集後獲得的分數 | Points earned on collection
+points = 3
+
+# 收集後顯示的論文文字 | Essay text shown on collection
+essay_text = Smith et al. (2024) confirm that academic integrity builds long-term trust in scholarship...
+
+
+[COLLECTIBLE_BOOK]
+# 是否啟用 (true/false) | Enable this collectible (true/false)
+enabled = true
+
+# 顯示名稱 | Display label
+label = Academic Book
+
+# 顏色 (十六進位) | Color (hex)
+color = #3b82f6
+
+# 碰撞半徑 (像素) | Collision radius (pixels)
+size = 12
+
+# 收集後獲得的分數 | Points earned on collection
+points = 2
+
+# 收集後顯示的論文文字 | Essay text shown on collection
+essay_text = As documented in peer-reviewed academic literature...
+
+
+[COLLECTIBLE_DATA]
+# 是否啟用 (true/false) | Enable this collectible (true/false)
+enabled = true
+
+# 顯示名稱 | Display label
+label = Verified Data
+
+# 顏色 (十六進位) | Color (hex)
+color = #f5c842
+
+# 碰撞半徑 (像素) | Collision radius (pixels)
+size = 11
+
+# 收集後獲得的分數 | Points earned on collection
+points = 2
+
+# 收集後顯示的論文文字 | Essay text shown on collection
+essay_text = The 2023 national survey data clearly demonstrates...
+
+
+[COLLECTIBLE_EXPERT]
+# 是否啟用 (true/false) | Enable this collectible (true/false)
+enabled = true
+
+# 顯示名稱 | Display label
+label = Expert Quote
+
+# 顏色 (十六進位) | Color (hex)
+color = #a78bfa
+
+# 碰撞半徑 (像素) | Collision radius (pixels)
+size = 11
+
+# 收集後獲得的分數 | Points earned on collection
+points = 2
+
+# 收集後顯示的論文文字 | Essay text shown on collection
+essay_text = Professor Lee (2024) noted in a verified interview that...
+
+
+# --------------------------------------------------------------
+# 技能設定 | SKILL SETTINGS
+# --------------------------------------------------------------
+# 參數說明 | Parameter descriptions:
+#   name: 技能名稱 | Skill name
+#   unlock_level: 解鎖關卡 (1-4) | Unlock level (1-4)
+#   effect_description: 遊戲效果說明 | In-game effect description
+#   learn_text: 學習内容 | What you learn (educational content)
+#   effect_type: 技能類型 (程式用) | Effect type (for code)
+#   effect_value: 技能數值 | Effect value
+# --------------------------------------------------------------
+
+[SKILL_1]
+# 技能名稱 | Skill name
+name = Proper Citation
+
+# 解鎖關卡 (1-4) | Unlock level (1-4)
+unlock_level = 2
+
+# 遊戲效果說明 | In-game effect description
+effect_description = Your collection range increases by 100%. A blue circle appears around you. Collectibles are magnetically absorbed into your collection zone!
+
+# 學習内容 (教育意義) | What you learn (educational content)
+learn_text = A citation tells readers where your ideas came from. Format: Author (Year). Title. Publisher. Without it, even honest work looks like plagiarism.
+
+# 技能類型 (程式用) | Effect type (for code)
+effect_type = collection_range
+
+# 技能數值 | Effect value
+effect_value = 3.0
+
+# 吸收區域半徑倍數 | Absorb area radius multiplier
+absorb_radius = 1.7
+
+
+[SKILL_2]
+# 技能名稱 | Skill name
+name = Plagiarism Awareness
+
+# 解鎖關卡 (1-4) | Unlock level (1-4)
+unlock_level = 2
+
+# 遊戲效果說明 | In-game effect description
+effect_description = Plagiarism enemies move 50% slower. You can see their movement patterns more clearly and have more time to avoid them!
+
+# 學習内容 (教育意義) | What you learn (educational content)
+learn_text = Plagiarism means using others' work as your own without proper attribution. It is a serious academic offense that can result in failing grade, suspension, or expulsion.
+
+# 技能類型 (程式用) | Effect type (for code)
+effect_type = slow_plagiarism
+
+# 技能數值 | Effect value
+effect_value = 0.5
+
+
+[SKILL_3]
+# 技能名稱 | Skill name
+name = Ethical Work
+
+# 解鎖關卡 (1-4) | Unlock level (1-4)
+unlock_level = 2
+
+# 遊戲效果說明 | In-game effect description
+effect_description = Creates a barrier to block Essay Mill "paper" projectiles! The barrier appears automatically when you have this skill.
+
+# 學習内容 (教育意義) | What you learn (educational content)
+learn_text = Using others' work as your own is academic fraud. Ethical work demonstrates your genuine learning and protects your qualification.
+
+# 技能類型 (程式用) | Effect type (for code)
+effect_type = barrier
+
+# 技能數值 | Effect value
+effect_value = 1
+
+
+[SKILL_4]
+# 技能名稱 | Skill name
+name = Source Verification
+
+# 解鎖關卡 (1-4) | Unlock level (1-4)
+unlock_level = 2
+
+# 遊戲效果說明 | In-game effect description
+effect_description = Fake Sources reveal their true identity with red warning flash when nearby. Reduces damage from Fake Sources by 50%. You can identify threats faster!
+
+# 學習内容 (教育意義) | What you learn (educational content)
+learn_text = Evaluate sources by: Is the author credentialled? Is the journal peer-reviewed? Is it recent enough? Is it directly relevant to your argument?
+
+# 技能類型 (程式用) | Effect type (for code)
+effect_type = reveal_all_fake
+
+# 技能數值 | Effect value
+effect_value = 0.5
+
+
+# --------------------------------------------------------------
+# 評分設定 | GRADING SETTINGS
+# --------------------------------------------------------------
+
+[GRADING]
+# 誠信值佔總分比例 (0.0 ~ 1.0, 建議: 0.5 ~ 0.7) | Integrity weight in total score (0.0 ~ 1.0, Recommended: 0.5 ~ 0.7)
+integrity_weight = 0.4
+
+# 收集物分數上限 | Collectible score cap
+collectible_score_cap = 70
+
+# A 等級分數門檻 | Grade A threshold
+grade_a_threshold = 80
+
+# B 等級分數門檻 | Grade B threshold
+grade_b_threshold = 65
+
+# C 等級分數門檻 | Grade C threshold
+grade_c_threshold = 50
+
+# D 等級分數門檻 | Grade D threshold
+grade_d_threshold = 35
+
+# 低分觸發的關卡說明文字門檻 | Low grade threshold for level feedback
+low_grade_threshold = 55
+
+
+# --------------------------------------------------------------
+# 圖片設定 | IMAGE SETTINGS
+# 將圖片放入 images/ 資料夾後，在此填入檔名
+# Put images in the images/ folder and enter filenames below
+# --------------------------------------------------------------
+
+[IMAGES]
+# 玩家角色圖片 | Player character images
+player_student = player_student.png
+player_teacher = player_teacher.png
+player_admin = player_admin.png
+
+# 敵人圖片 | Enemy images
+enemy_plagiarism = enemy_plagiarism.png
+enemy_aiblob = enemy_aiblob.png
+enemy_essaymill = enemy_essaymill.png
+enemy_fakesource = enemy_fakesource.png
+enemy_collude = enemy_collude.png
+
+# 收集物圖片 | Collectible images
+collectible_journal = icon_journal.png
+collectible_book = icon_book.png
+collectible_data = icon_data.png
+collectible_expert = icon_expert.png
+
+# 背景圖片 | Background images
+bg_library = bg_library.png
+bg_computer_lab = bg_computer_lab.png
+bg_lecture = bg_lecture.png
+bg_cyberspace = bg_cyberspace.png
+
+# 過場畫面圖片 | Cutscene images
+cutscene_intro_1 = cutscene_intro_1.png
+cutscene_intro_2 = cutscene_intro_2.png
+cutscene_angel = cutscene_angel.png
+cutscene_devil = cutscene_devil.png
+cutscene_graduation = cutscene_graduation.png

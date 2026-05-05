@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Academic Trial</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Cutscene screen */
+    #screen-cutscene {
+      position: absolute; inset: 0; z-index: 50;
+      background: transparent;
+      display: none;
+      align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+    #screen-cutscene.active { display: flex; }
+
+    /* Mute button */
+    #mute-btn {
+      position: absolute; bottom: 10px; right: 14px; z-index: 60;
+      background: rgba(10,10,30,0.7); border: 1px solid #334;
+      color: #aaa; font-size: calc(13px * var(--ui-scale)); font-family: monospace;
+      padding: 5px 12px; border-radius: 4px; cursor: pointer;
+    }
+    #mute-btn:hover { background: rgba(30,30,60,0.9); color: #fff; }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <button id="mute-btn" onclick="toggleMute()">🔊 Sound</button>
+
+  <!-- Game Area: canvas -->
+  <div id="game-wrap" style="position:absolute;inset:0;z-index:0;">
+    <canvas id="game-canvas"></canvas>
+  </div>
+
+  <!-- LOADING -->
+  <div id="screen-loading" class="screen active" style="z-index:55;">
+    <div class="loading-text">LOADING...</div>
+    <div class="loading-sub" id="loading-sub-text">Reading config.txt...</div>
+  </div>
+
+  <!-- CUTSCENE -->
+  <div id="screen-cutscene" class="screen" onclick="Game.advanceCutscene()" style="z-index:50;">
+    <!-- Canvas draws the cutscene image -->
+    <div id="cutscene-instruction" style="position:absolute;bottom:24px;width:100%;text-align:center;color:rgba(255,255,255,0.5);font:13px monospace;pointer-events:none;">
+      Click or tap to continue →
+    </div>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="screen-login" class="screen" style="z-index:11;align-items:center;justify-content:center;">
+    <div id="title-box">
+      <div id="game-title-text">THE ACADEMIC TRIAL</div>
+      <div class="title-subtitle">
+        Academic Integrity Quest<br>
+        A dream-world action game for university learners
+      </div>
+      <div class="title-tagline" style="margin-bottom: 20px;">
+        Your game data will be recorded for learning analysis.
+      </div>
+      <div style="margin: 20px 0; max-width: 320px; margin-left: auto; margin-right: auto;">
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; color: #aaa; font-size: calc(11px * var(--ui-scale)); margin-bottom: 6px;">Name</label>
+          <input type="text" id="login-name" placeholder="Enter your name" autocomplete="off" style="width: 100%; padding: 10px 12px; border: 1px solid #334; border-radius: 6px; background: #0a0a1a; color: #fff; font-size: calc(14px * var(--ui-scale)); box-sizing: border-box;">
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; color: #aaa; font-size: calc(11px * var(--ui-scale)); margin-bottom: 6px;">Email</label>
+          <input type="email" id="login-email" placeholder="Enter your university email" style="width: 100%; padding: 10px 12px; border: 1px solid #334; border-radius: 6px; background: #0a0a1a; color: #fff; font-size: calc(14px * var(--ui-scale)); box-sizing: border-box;">
+        </div>
+        <button class="btn btn-green" onclick="Game.submitLogin()" style="width: 100%;">CONTINUE →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TITLE -->
+  <div id="screen-title" class="screen" style="z-index:10;">
+    <div id="title-box">
+      <div id="game-title-text">THE ACADEMIC TRIAL</div>
+      <div class="title-subtitle">
+        Academic Integrity Quest<br>
+        A dream-world action game for university learners
+      </div>
+      <div class="title-tagline">
+        Move your mouse — or touch and drag on mobile.<br>
+        Collect glowing sources. Avoid integrity threats.<br>
+        Hover over enemies (or tap) to learn what they are.
+      </div>
+      <button class="btn btn-green" onclick="Game.showRoleSelect()">START GAME</button>
+      <br><br>
+      <button class="btn btn-outline" style="font-size:calc(12px * var(--ui-scale));padding:7px 18px;"
+        onclick="document.getElementById('cfg-info').style.display=document.getElementById('cfg-info').style.display==='block'?'none':'block'">
+        About Config &amp; Assets
+      </button>
+      <div id="cfg-info" style="display:none;margin-top:14px;text-align:left;background:#0a0a1a;border:1px solid #334;border-radius:6px;padding:14px;font-size:calc(12px * var(--ui-scale));color:#888;line-height:1.9;">
+        <strong style="color:#f5c842;">Customise this game:</strong><br>
+        • Edit <code style="color:#22c55e;">config.txt</code> to change game settings<br>
+        • Add images to <code style="color:#22c55e;">images/</code> subfolders to add art<br>
+        • Add audio to <code style="color:#22c55e;">audio/</code> subfolders to add music/sfx<br>
+        • See <code style="color:#22c55e;">ASSET_GUIDE.txt</code> for full specs<br><br>
+        <span style="color:#e24b4b;">Tip:</span> Missing assets are silently ignored — game always runs.
+      </div>
+    </div>
+  </div>
+
+  <!-- ROLE SELECT -->
+  <div id="screen-role" class="screen" style="z-index:20;">
+    <div class="role-select-box">
+      <div class="role-select-title">Choose Your Role</div>
+      <div class="role-select-sub">Your role determines your starting advantage.</div>
+      <div class="role-cards">
+        <div class="role-card selected" id="role-student" onclick="Game.selectRole('student')">
+          <div class="role-img-wrap">
+            <img src="images/characters/player_student.png" class="role-student-img" alt="Student" onload="this.style.display='block';this.nextElementSibling.style.display='none';this.parentElement.style.background='transparent';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';this.parentElement.style.background='#1a1a2e';">
+            <div class="role-icon">🎓</div>
+          </div>
+          <div class="role-name">STUDENT</div>
+          <div class="role-desc">Learn integrity from scratch. Core learning experience.</div>
+          <div class="stat-bar-wrap">
+            <div class="stat-label">SPEED</div>
+            <div class="stat-pips">
+              <div class="stat-pip on"></div><div class="stat-pip on"></div><div class="stat-pip on"></div>
+              <div class="stat-pip off"></div><div class="stat-pip off"></div>
+            </div>
+          </div>
+          <div class="role-conditions">
+            <div class="role-conditions-title">Starting Conditions</div>
+            <div class="role-conditions-text">Standard speed (×1.0). No starting bonus. Builds knowledge from zero — the intended core learning experience.</div>
+          </div>
+        </div>
+        <div class="role-card" id="role-teacher" onclick="Game.selectRole('teacher')">
+          <div class="role-img-wrap">
+            <img src="images/characters/player_teacher.png" class="role-student-img" alt="Teacher" onload="this.style.display='block';this.nextElementSibling.style.display='none';this.parentElement.style.background='transparent';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';this.parentElement.style.background='#1a1a2e';">
+            <div class="role-icon">👨‍🏫</div>
+          </div>
+          <div class="role-name">TEACHER</div>
+          <div class="role-desc">Detection advantage. Spot violations in others' work.</div>
+          <div class="stat-bar-wrap">
+            <div class="stat-label">DETECTION</div>
+            <div class="stat-pips">
+              <div class="stat-pip on"></div><div class="stat-pip on"></div><div class="stat-pip on"></div>
+              <div class="stat-pip on"></div><div class="stat-pip off"></div>
+            </div>
+          </div>
+          <div class="role-conditions">
+            <div class="role-conditions-title">Starting Conditions</div>
+            <div class="role-conditions-text">Speed bonus (×1.15). A dashed detection ring appears around all enemies, helping you identify threats earlier. Represents the educator perspective.</div>
+          </div>
+        </div>
+        <div class="role-card" id="role-admin" onclick="Game.selectRole('admin')">
+          <div class="role-img-wrap">
+            <img src="images/characters/player_admin.png" class="role-student-img" alt="Admin" onload="this.style.display='block';this.nextElementSibling.style.display='none';this.parentElement.style.background='transparent';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';this.parentElement.style.background='#1a1a2e';">
+            <div class="role-icon">🏢</div>
+          </div>
+          <div class="role-name">ADMIN</div>
+          <div class="role-desc">Integrity aura slows nearby enemies. Policy protection.</div>
+          <div class="stat-bar-wrap">
+            <div class="stat-label">AUTHORITY</div>
+            <div class="stat-pips">
+              <div class="stat-pip on"></div><div class="stat-pip on"></div><div class="stat-pip on"></div>
+              <div class="stat-pip on"></div><div class="stat-pip on"></div>
+            </div>
+          </div>
+          <div class="role-conditions">
+            <div class="role-conditions-title">Starting Conditions</div>
+            <div class="role-conditions-text">Speed penalty (×0.9) offset by a purple integrity aura that slightly slows all nearby enemies. Represents the institutional policy perspective.</div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-green" onclick="Game.startGame()">BEGIN ADVENTURE →</button>
+      <br><br>
+      <button class="btn btn-outline" style="font-size:calc(12px * var(--ui-scale));padding:7px 18px;" onclick="UI.showScreen('title')">← Back</button>
+    </div>
+  </div>
+
+  <!-- NO ROLE WARNING -->
+  <div id="screen-no-role" class="screen" style="z-index:25;display:none;">
+    <div class="role-select-box" style="max-width:380px;text-align:center;">
+      <div class="role-select-title" style="color:#e24b4b;">⚠️ No Role Enabled</div>
+      <div class="role-select-sub" style="margin-top:12px;">Please enable at least 1 role in config.txt.</div>
+      <div style="margin-top:28px;">
+        <button class="btn btn-green" onclick="UI.showScreen('title');Game.state='title';">← Back to Title</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILL SCREEN -->
+  <div id="screen-skill" class="screen" style="z-index:30;overflow-y:auto;padding:24px 16px;">
+    <div class="skill-screen-box">
+      <div id="skill-level-name">Level 1</div>
+      <div id="skill-level-desc"></div>
+      <div id="skill-cards-container"></div>
+      <button class="btn btn-disabled" id="skill-continue-btn" style="margin-top:calc(24px * var(--ui-scale));">Begin Level</button>
+      <div id="skill-select-hint" class="skill-hint">Please select a skill to continue</div>
+    </div>
+  </div>
+
+  <!-- ARENA -->
+  <div id="screen-arena" class="screen" style="z-index:5;">
+    <div id="hud-top">
+      <span class="hud-label">LEVEL</span><span id="hud-level" class="hud-val">1/4</span>
+      <span class="hud-label" style="margin-left:8px;">INTEGRITY</span>
+      <div id="hud-int-wrap"><div id="hud-int-bg"><div id="hud-integrity-bar" style="width:100%;"></div></div></div>
+      <span id="hud-integrity-pct" class="hud-val">100%</span>
+      <span class="hud-label" style="margin-left:8px;">GRADE</span>
+      <span id="hud-grade" class="hud-val" style="color:#22c55e;">A</span>
+      <span class="hud-label" style="margin-left:8px;">SOURCES</span>
+      <span id="hud-score" class="hud-val">0</span>
+      <span class="hud-label" style="margin-left:8px;">TIME</span>
+      <span id="hud-timer" class="hud-val">30s</span>
+    </div>
+    <div id="hud-skills-wrap">
+      <span class="hud-skills-label">SKILLS:</span>
+      <div id="hud-skills"><span class="skill-badge-empty">No skills yet</span></div>
+    </div>
+    <div id="hud-assignment-label">Assessment: <span id="hud-assignment">—</span></div>
+    <button id="btn-skip-level" class="btn btn-skip" style="display:none;" onclick="Game.skipLevel()">⚡ SKIP LEVEL (Debug)</button>
+    <div id="essay-panel" style="margin-top:auto;">
+      <div id="essay-label">YOUR ESSAY:</div>
+      <div id="essay-display"><span class="essay-placeholder">Collect sources to build your essay...</span></div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="screen-result" class="screen" style="z-index:30;overflow-y:auto;padding:20px;">
+    <div class="result-box">
+      <div id="result-level-num">Level 1 of 4</div>
+      <div id="result-assignment">Assignment</div>
+      <div class="result-grade-block">
+        <span id="result-grade-letter">F</span>
+        <span id="result-grade-pct">25%</span>
+      </div>
+      <div id="result-message"></div>
+      <div class="result-essay-label">ESSAY PREVIEW:</div>
+      <div id="result-essay"></div>
+      <div class="grade-history-label">GRADE PROGRESS:</div>
+      <div id="result-history"></div>
+      <button class="btn btn-green" id="result-next-btn">Continue →</button>
+    </div>
+  </div>
+
+  <!-- COMPLETE -->
+  <div id="screen-complete" class="screen" style="z-index:30;overflow-y:auto;padding:20px;">
+    <div class="complete-box">
+      <div class="complete-grad-icon">🎓</div>
+      <div class="complete-title">YOU GRADUATED!</div>
+      <div id="complete-message"></div>
+      <div class="grade-history-label">YOUR FINAL GRADES:</div>
+      <div id="complete-history"></div>
+      <div class="complete-reflection">
+        <div class="reflection-title">Reflection Questions</div>
+        <ul class="reflection-questions">
+          <li>How did your grade improve as you gained each skill?</li>
+          <li>Which enemy (violation) surprised you most?</li>
+          <li>Which skill felt most useful — and why?</li>
+          <li>How will you apply this in your real academic work?</li>
+        </ul>
+      </div>
+      <button class="btn btn-outline" onclick="location.reload()" style="margin-right:10px;">Play Again</button>
+      <button class="btn btn-outline" onclick="UI.showScreen('title')">Back to Title</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="config-parser.js"></script>
+<script src="asset-loader.js"></script>
+<script src="game.js"></script>
+<script>
+  const UI = {
+    showScreen(name) {
+      const map = {
+        'loading':'screen-loading','login':'screen-login','title':'screen-title',
+        'role-select':'screen-role','no-role':'screen-no-role','cutscene':'screen-cutscene',
+        'skill':'screen-skill','arena':'screen-arena',
+        'result':'screen-result','complete':'screen-complete',
+      };
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      const el = document.getElementById(map[name]||name);
+      if (el) el.classList.add('active');
+    },
+    hideScreen(name) {
+      const map = {'cutscene':'screen-cutscene'};
+      const el = document.getElementById(map[name]||name);
+      if (el) el.classList.remove('active');
+    },
+    setLoadingText(text) {
+      const el = document.getElementById('loading-sub-text');
+      if (el) el.textContent = text;
+    },
+  };
+
+  let _muted = false;
+  function toggleMute() {
+    _muted = !_muted;
+    AudioManager.setMuted(_muted);
+    document.getElementById('mute-btn').textContent = _muted ? '🔇 Muted' : '🔊 Sound';
+  }
+
+  window.addEventListener('load', async () => {
+    await Game.init();
+  });
+</script>
+</body>
+</html>

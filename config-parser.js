@@ -94,6 +94,7 @@ const ConfigParser = {
 language: this.get('GLOBAL', 'language', 'en'),
         showFPS: this.get('GLOBAL', 'show_fps', false),
         timezone: this.get('GLOBAL', 'timezone', 'GMT+8'),
+        autoReportDownload: this.get('GLOBAL', 'auto_report_download', false),
         completionMessage: this.get('GLOBAL', 'completion_message', 'Congratulations!'),
        // Font size settings
        fontSizePlayer: this.get('GLOBAL', 'font_size_player', 10),

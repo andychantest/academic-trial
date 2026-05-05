@@ -1469,10 +1469,66 @@ drawEnemyInfo() {
     const totalTime = (this.record.level1Time_sec || 0) + (this.record.level2Time_sec || 0) + (this.record.level3Time_sec || 0) + (this.record.level4Time_sec || 0);
     this.record.totalPlayTime_sec = totalTime;
     this._saveRecordToStorage();
-    this._autoDownloadCSV();
+    const autoDownload = this.cfg?.global?.autoReportDownload !== false;
+    if(autoDownload){
+      this._autoDownloadCSV();
+    }else{
+      const btn = document.getElementById('download-report-btn');
+      if(btn) btn.style.display = 'inline-block';
+    }
   },
 
   _autoDownloadCSV(){
+    const r = this.record;
+    const baseHeaders = [
+      'Name', 'Email', 'LoginTimestamp',
+      'CutsceneReadTime_sec',
+      'SkillSelectL2Time_sec', 'Level2Time_sec', 'Skill_L2',
+      'SkillSelectL3Time_sec', 'Level3Time_sec', 'Skill_L3',
+      'SkillSelectL4Time_sec', 'Level4Time_sec', 'Skill_L4_1', 'Skill_L4_2',
+      'GradeLevel1', 'GradeLevel1_pct', 'GradeLevel2', 'GradeLevel2_pct', 'GradeLevel3', 'GradeLevel3_pct', 'GradeLevel4', 'GradeLevel4_pct',
+      'IntegrityLevel1', 'IntegrityLevel2', 'IntegrityLevel3', 'IntegrityLevel4',
+      'FinalScore', 'FinalIntegrity', 'FinalGrade',
+      'TotalPlayTime_sec'
+    ];
+    const attackKeys = Object.keys(r.attacks || {});
+    const collectKeys = Object.keys(r.collects || {});
+    const headers = [...baseHeaders];
+    attackKeys.forEach(k => headers.push('Attack_' + k));
+    collectKeys.forEach(k => headers.push('Collect_' + k));
+    const escape = v => {
+      if(v === null || v === undefined) return '';
+      const s = String(v);
+      if(s.includes(',') || s.includes('"') || s.includes('\n')) return '"' + s.replace(/"/g, '""') + '"';
+      return s;
+    };
+    const values = [
+      r.name, r.email, r.loginTimestamp,
+      r.cutsceneReadTime_sec || 0,
+      r.skillSelectL2Time_sec || 0, r.level2Time_sec || 0, r.skillL2 || '',
+      r.skillSelectL3Time_sec || 0, r.level3Time_sec || 0, r.skillL3 || '',
+      r.skillSelectL4Time_sec || 0, r.level4Time_sec || 0, r.skillL4_1 || '', r.skillL4_2 || '',
+      r.gradeL1 || '', r.gradeL1_pct || 0, r.gradeL2 || '', r.gradeL2_pct || 0, r.gradeL3 || '', r.gradeL3_pct || 0, r.gradeL4 || '', r.gradeL4_pct || 0,
+      r.integrityL1 || 0, r.integrityL2 || 0, r.integrityL3 || 0, r.integrityL4 || 0,
+      r.finalScore || 0, r.finalIntegrity || 0, r.finalGrade || '',
+      r.totalPlayTime_sec || 0
+    ];
+    attackKeys.forEach(k => values.push(r.attacks?.[k] || 0));
+    collectKeys.forEach(k => values.push(r.collects?.[k] || 0));
+    const csv = headers.map(escape).join(',') + '\n' + values.map(escape).join(',');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const namePart = (r.name || 'record').replace(/[^a-z0-9]/gi, '_');
+    a.download = namePart + '_' + new Date().toISOString().slice(0,10) + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  },
+
+  exportSingleCSV(){
     const r = this.record;
     const baseHeaders = [
       'Name', 'Email', 'LoginTimestamp',

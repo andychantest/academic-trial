@@ -34,6 +34,9 @@ show_fps = false
 # 時區設定 | Timezone setting (e.g., GMT+8, GMT-5)
 timezone = GMT+8
 
+# 自動下載 CSV 報表 | Auto-download CSV report when game ends
+auto_report_download = false
+
 # 完成全部關卡後顯示的訊息 | Message shown after completing all levels
 completion_message = Congratulations! You have completed all 4 levels!
 

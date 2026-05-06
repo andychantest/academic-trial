@@ -35,6 +35,11 @@ const Game = {
   },
   _phaseStartTime: 0,
   _STORAGE_KEY: 'academic_trial_records',
+  // Screen shake & hit stop
+  _shakeX: 0, _shakeY: 0,
+  _shakeIntensity: 0,
+  _shakeDuration: 0,
+  _hitStopRemaining: 0,
 
   _formatTimestamp(date){
     const tz = this.cfg?.global?.timezone || 'GMT+8';
@@ -649,11 +654,23 @@ spawnCollectible() {
   getSkillValue(t){const sk=this.cfg.skills.find(s=>s.effectType===t);return sk?sk.effectValue:0;},
   getSkillAbsorbRadius(t){const sk=this.cfg.skills.find(s=>s.effectType===t);return sk?sk.absorbRadius:2.0;},
 
+  triggerShake(intensity, duration, decay) {
+    this._shakeIntensity = intensity;
+    this._shakeDuration = duration;
+    this._hitStopRemaining = 4;
+  },
+
   loop(ts) {
     if(this.state!=='arena') return;
     this.animId=requestAnimationFrame(t=>this.loop(t));
     const dt=Math.min((ts-(this._lastTime||ts))/16.67,3); this._lastTime=ts;
     this._fc++; this._ft+=dt*16.67; if(this._ft>=1000){this._fps=this._fc;this._fc=0;this._ft=0;}
+    
+    // Hit Stop - skip update frames
+    if(this._hitStopRemaining > 0) {
+      this._hitStopRemaining--;
+      return;
+    }
     
     // Animation frame timer
     this._animTimer += dt * 16.67;
@@ -663,12 +680,32 @@ spawnCollectible() {
       this._animTimer = this._animTimer % frameDuration;
     }
     
-    const ctx=this.ctx; ctx.clearRect(0,0,this.W,this.H);
+    const ctx=this.ctx;
+    
+    // Update shake
+    if(this._shakeDuration > 0) {
+      this._shakeDuration -= dt * 16.67;
+      const decay = Math.pow(0.7, (250 - this._shakeDuration) / 250);
+      this._shakeX = (Math.random() - 0.5) * this._shakeIntensity * 2 * decay;
+      this._shakeY = (Math.random() - 0.5) * this._shakeIntensity * 2 * decay;
+    } else {
+      this._shakeX = 0;
+      this._shakeY = 0;
+    }
+    
+    ctx.save();
+    if(this._shakeX !== 0 || this._shakeY !== 0) {
+      ctx.translate(this._shakeX, this._shakeY);
+    }
+    
+    ctx.clearRect(0,0,this.W,this.H);
     this.drawBg(); this.updateCollectibles(dt); this.updateEnemies(dt); this.updateProjectiles(dt);
     this.movePlayer(dt); this.drawPlayer();
     this.drawProjectiles(dt);
     this.drawParticles(dt); this.drawFloats(dt); this.drawTooltip(); this.drawHint(); this.drawEnemyInfo();
     if(this.cfg.global.showFPS){ctx.fillStyle='#ffffff55';ctx.font='11px monospace';ctx.textAlign='left';ctx.fillText(`FPS: ${this._fps}`,8,this.H-8);}
+    
+    ctx.restore();
   },
 
   drawBg() {
@@ -1082,7 +1119,9 @@ if(readyPath){
         if(!this.record.attacks[e.id]) this.record.attacks[e.id] = 0;
         this.record.attacks[e.id]++;
         for(let p=0;p<6;p++) this.particles.push({x:this.player.x,y:this.player.y,vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,color:e.color,life:20,sz:3});
-        AudioManager.playSfx('hit'); this.invincible=true;
+        AudioManager.playSfx('hit');
+        this.triggerShake(10, 250, 0.7);
+        this.invincible=true;
         setTimeout(()=>this.invincible=false,this.cfg.player.invincibilityMs);
         e.hitTimer=8; this.enemies.splice(i,1); this.updateHUDIntegrity(); this.updateEssay();
         if(this.integrity<=0){clearInterval(this.timerInterval);this.endArena(lvl);}
@@ -1199,6 +1238,7 @@ if(readyPath){
         }
         this.addFloat(this.player.x, this.player.y - 22, '- ' + p.damage, p.color);
         AudioManager.playSfx('hit');
+        this.triggerShake(10, 250, 0.7);
         this.projectiles.splice(i, 1);
         this.updateHUDIntegrity();
         if(this.integrity <= 0){

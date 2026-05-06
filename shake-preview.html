@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screen Shake Preview - Academic Trial</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Segoe UI', monospace;
+      background: #0a0a16;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    h1 {
+      color: #4a9eff;
+      margin-bottom: 10px;
+      font-size: 24px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+    
+    .subtitle {
+      color: #888;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    
+    .preview-container {
+      position: relative;
+      width: 800px;
+      height: 500px;
+      border: 2px solid #4a9eff44;
+      border-radius: 8px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0c0c1c 0%, #0a0a16 100%);
+    }
+    
+    /* The shake wrapper - everything inside will shake */
+    #shake-wrapper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.05s;
+    }
+    
+    /* Checkerboard pattern */
+    .bg-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(45deg, #151525 25%, transparent 25%),
+        linear-gradient(-45deg, #151525 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #151525 75%),
+        linear-gradient(-45deg, transparent 75%, #151525 75%);
+      background-size: 40px 40px;
+      background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+      opacity: 0.5;
+    }
+    
+    /* Decorative orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.15;
+    }
+    .orb-1 { width: 120px; height: 120px; background: #4a9eff; top: 10%; left: 15%; }
+    .orb-2 { width: 80px; height: 80px; background: #22c55e; top: 60%; right: 20%; }
+    .orb-3 { width: 100px; height: 100px; background: #e347; bottom: 20%; left: 40%; }
+    
+    /* Player character */
+    .player {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      left: 150px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: radial-gradient(circle at 30% 30%, #6bb3ff, #4a9eff 60%, #2d7dd2);
+      border-radius: 50%;
+      box-shadow: 0 0 20px #4a9eff66, inset 0 -5px 15px #2d7dd266;
+    }
+    .player::after {
+      content: 'YOU';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: #4a9eff;
+      font-weight: bold;
+    }
+    
+    /* Enemy target */
+    .enemy {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      right: 150px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: radial-gradient(circle at 30% 30%, #ff6b6b, #e347 60%, #c0392b);
+      border-radius: 50%;
+      box-shadow: 0 0 20px #e34766, inset 0 -5px 15px #c0392666;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .enemy:hover { transform: translateY(-50%) scale(1.1); }
+    .enemy::after {
+      content: 'TAP ME';
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: #e347;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    
+    /* Hit flash overlay */
+    #hit-flash {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #e347;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.1s;
+    }
+    
+    /* Controls */
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .control-group label {
+      font-size: 12px;
+      color: #888;
+      text-transform: uppercase;
+    }
+    
+    button {
+      padding: 12px 24px;
+      font-size: 14px;
+      font-family: monospace;
+      border: 2px solid #4a9eff;
+      background: #4a9eff22;
+      color: #4a9eff;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    button:hover {
+      background: #4a9eff44;
+      transform: translateY(-2px);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    button.active {
+      background: #4a9eff;
+      color: #0a0a16;
+    }
+    
+    .info {
+      margin-top: 20px;
+      padding: 15px;
+      background: #1a1a2e;
+      border-radius: 8px;
+      max-width: 800px;
+      text-align: center;
+    }
+    
+    .info p {
+      color: #888;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    
+    /* Hit stop effect indicator */
+    .hit-stop-indicator {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 16px;
+      background: #22c55e44;
+      border: 1px solid #22c55e;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #22c55e;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    
+    .hit-stop-indicator.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Screen Shake Preview</h1>
+  <p class="subtitle">點擊敵人觸發效果，或使用下方按鈕測試</p>
+  
+  <div class="preview-container" id="preview-container">
+    <div id="shake-wrapper">
+      <div class="bg-pattern"></div>
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="player"></div>
+      <div class="enemy" id="enemy" onclick="triggerShake()"></div>
+    </div>
+    <div id="hit-flash"></div>
+    <div class="hit-stop-indicator" id="hit-stop-indicator">⏸ HIT STOP</div>
+  </div>
+  
+  <div class="controls">
+    <div class="control-group">
+      <label>震動強度</label>
+      <button onclick="setShakeMode('light')" id="btn-light">柔和 🌊</button>
+    </div>
+    <div class="control-group">
+      <label>震動強度</label>
+      <button onclick="setShakeMode('medium')" id="btn-medium" class="active">中等 💪</button>
+    </div>
+    <div class="control-group">
+      <label>震動強度</label>
+      <button onclick="setShakeMode('strong')" id="btn-strong">強烈 💥</button>
+    </div>
+    <div class="control-group">
+      <label>額外效果</label>
+      <button onclick="toggleHitStop()" id="btn-hitstop">Hit Stop 開</button>
+    </div>
+    <div class="control-group">
+      <label>額外效果</label>
+      <button onclick="toggleFlash()" id="btn-flash" class="active">閃爍 開</button>
+    </div>
+  </div>
+  
+  <div class="info">
+    <p>💡 提示：點擊紅色敵人圓球觸發震動效果。切換不同按鈕體驗不同風格的螢幕震動。</p>
+  </div>
+  
+  <script>
+    // Shake configuration
+    const shakeConfigs = {
+      light: { intensity: 4, duration: 200, decay: 0.8 },
+      medium: { intensity: 10, duration: 250, decay: 0.7 },
+      strong: { intensity: 18, duration: 350, decay: 0.6 }
+    };
+    
+    let currentMode = 'medium';
+    let hitStopEnabled = false;
+    let flashEnabled = true;
+    let isShaking = false;
+    
+    const wrapper = document.getElementById('shake-wrapper');
+    const flash = document.getElementById('hit-flash');
+    const hitStopIndicator = document.getElementById('hit-stop-indicator');
+    const container = document.getElementById('preview-container');
+    
+    function setShakeMode(mode) {
+      currentMode = mode;
+      document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active'));
+      document.getElementById('btn-' + mode).classList.add('active');
+    }
+    
+    function toggleHitStop() {
+      hitStopEnabled = !hitStopEnabled;
+      document.getElementById('btn-hitstop').textContent = hitStopEnabled ? 'Hit Stop 開' : 'Hit Stop 關';
+      document.getElementById('btn-hitstop').classList.toggle('active', hitStopEnabled);
+    }
+    
+    function toggleFlash() {
+      flashEnabled = !flashEnabled;
+      document.getElementById('btn-flash').textContent = flashEnabled ? '閃爍 開' : '閃爍 關';
+      document.getElementById('btn-flash').classList.toggle('active', flashEnabled);
+    }
+    
+    function triggerShake() {
+      if (isShaking) return;
+      isShaking = true;
+      
+      const config = shakeConfigs[currentMode];
+      const startTime = Date.now();
+      
+      // Hit Stop: pause briefly
+      if (hitStopEnabled) {
+        hitStopIndicator.classList.add('show');
+        setTimeout(() => {
+          hitStopIndicator.classList.remove('show');
+        }, 80);
+      }
+      
+      // Flash effect
+      if (flashEnabled) {
+        flash.style.opacity = '0.3';
+        setTimeout(() => { flash.style.opacity = '0'; }, 100);
+      }
+      
+      // Shake animation
+      function shake() {
+        const elapsed = Date.now() - startTime;
+        const progress = elapsed / config.duration;
+        
+        if (progress < 1) {
+          const decay = Math.pow(config.decay, progress * 10);
+          const intensity = config.intensity * decay;
+          
+          // Random offset with decay
+          const offsetX = (Math.random() - 0.5) * intensity * 2;
+          const offsetY = (Math.random() - 0.5) * intensity * 2;
+          
+          wrapper.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+          requestAnimationFrame(shake);
+        } else {
+          wrapper.style.transform = '';
+          isShaking = false;
+        }
+      }
+      
+      shake();
+      
+      // Button feedback animation
+      const enemy = document.getElementById('enemy');
+      enemy.style.transform = 'translateY(-50%) scale(0.9)';
+      setTimeout(() => {
+        enemy.style.transform = 'translateY(-50%) scale(1)';
+      }, 100);
+    }
+    
+    // Keyboard trigger
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        triggerShake();
+      }
+    });
+  </script>
+</body>
+</html>

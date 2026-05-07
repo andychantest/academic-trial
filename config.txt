@@ -14,7 +14,7 @@
 
 [DEBUG]
 # 調試模式 (true/false) - 顯示碰撞區域紅線 | Debug mode (true/false) - Show collision area with red lines
-debug_mode = true
+debug_mode = false
 
 
 # --------------------------------------------------------------

@@ -1483,6 +1483,13 @@ drawEnemyInfo() {
     this.record[gradeKey + '_pct'] = grade.pct;
     const integrityKey = 'integrityL' + this.currentLevel;
     this.record[integrityKey] = Math.round(this.integrity);
+    try{gtag('event', 'level_complete', {
+      level: this.currentLevel,
+      grade_letter: grade.letter,
+      grade_pct: grade.pct,
+      integrity: Math.round(this.integrity),
+      time_sec: this.record[timeKey]
+    });}catch(e){}
     AudioManager.playSfx(grade.letter==='A'||grade.letter==='B'?'grade_a':'grade_f');AudioManager.playMusic('result');
     UI.showScreen('result');
     document.getElementById('result-assignment').textContent=lvl.assignmentName;
@@ -1508,6 +1515,20 @@ drawEnemyInfo() {
     this.record.finalGrade = finalGrade.letter;
     const totalTime = (this.record.level1Time_sec || 0) + (this.record.level2Time_sec || 0) + (this.record.level3Time_sec || 0) + (this.record.level4Time_sec || 0);
     this.record.totalPlayTime_sec = totalTime;
+    try{
+      const r = this.record;
+      gtag('event', 'game_complete', {
+        role: this.playerRole || '',
+        cutsceneReadTime_sec: r.cutsceneReadTime_sec || 0,
+        gradeL1: r.gradeL1 || '', gradeL1_pct: r.gradeL1_pct || 0, integrityL1: r.integrityL1 || 0,
+        gradeL2: r.gradeL2 || '', gradeL2_pct: r.gradeL2_pct || 0, integrityL2: r.integrityL2 || 0,
+        gradeL3: r.gradeL3 || '', gradeL3_pct: r.gradeL3_pct || 0, integrityL3: r.integrityL3 || 0,
+        gradeL4: r.gradeL4 || '', gradeL4_pct: r.gradeL4_pct || 0, integrityL4: r.integrityL4 || 0,
+        skillL2: r.skillL2 || '', skillL3: r.skillL3 || '', skillL4_1: r.skillL4_1 || '', skillL4_2: r.skillL4_2 || '',
+        finalScore: r.finalScore || 0, finalIntegrity: r.finalIntegrity || 0,
+        finalGrade: r.finalGrade || '', totalPlayTime_sec: totalTime
+      });
+    }catch(e){}
     this._saveRecordToStorage();
     const autoDownload = this.cfg?.global?.autoReportDownload !== false;
     if(autoDownload){
